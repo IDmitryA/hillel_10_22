@@ -1,4 +1,4 @@
-a = "Homework №3"
+a = "My homework №3"
 to_long_list = [
     1,
     2,
