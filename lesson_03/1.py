@@ -1,1 +1,10 @@
-a = 3
+# check working GitHub Actions
+
+a = "some string"
+
+
+def foo():
+    pass
+
+
+print(a)
