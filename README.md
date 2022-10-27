@@ -8,7 +8,7 @@ hillel_10_22 --> lesson_02
 hillel_10_22 --> README.md
 hillel_10_22 --> Pipfile
 hillel_10_22 --> Pipfile.lock
-lesson_02 --> homework.py
+lesson_02 --> homework_02.py
 ```
 ## Quick start
 
