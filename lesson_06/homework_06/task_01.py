@@ -7,8 +7,9 @@ def reverse_string(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if isinstance(func(*args, **kwargs), str):
-            return func(*args, **kwargs)[::-1]
+        data = func(*args, **kwargs)
+        if isinstance(data, str):
+            return data[::-1]
         else:
             return None
 
