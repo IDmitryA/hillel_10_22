@@ -47,6 +47,7 @@ def main():
      -  -
       --
     """
+
     shape: Shape = get_shape()
     shape.draw()
 
