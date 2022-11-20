@@ -12,25 +12,6 @@ class SignError(Exception):
         return "Wrong sign. You can choose just between '+' and '-'"
 
 
-class CalculationProcessor:
-    @staticmethod
-    def exchange(price1: Price, price2: Price) -> None:
-        """Exchanging currencies if needed"""
-        if price1.currency == price2.currency:
-            pass
-        elif price2.currency == "USD":
-            price2.amount *= usd_rates[price1.currency]
-        else:
-            price2.amount /= usd_rates[price2.currency]
-            price2.amount *= usd_rates[price1.currency]
-
-    @staticmethod
-    def get_result(price1: Price, sign: str, price2: Price) -> Price:
-        """Makes calculations of two amounts with the same currency"""
-        result: Price = eval(f"{price1}{sign}{price2}")
-        return result
-
-
 def handle_errors(func):
     def inner(*args, **kwargs):
         while True:
@@ -53,7 +34,7 @@ def handle_errors(func):
 def main():
     user_input: list[str] = input(
         f"Enter your request in the following format: 1 UAH +/- 1 UAH.\n"
-        f"Available currencies{tuple(usd_rates.keys())}:\n"
+        f"Available currencies{list(usd_rates.keys()) + ['USD']}:\n"
     ).split(" ")
 
     #  Initial check for valid input format
@@ -70,9 +51,9 @@ def main():
     if any(
         [
             not operand_1.isdigit(),
-            currency_1 not in usd_rates,
+            currency_1 not in (list(usd_rates.keys()) + ["USD"]),
             not operand_2.isdigit(),
-            currency_2 not in usd_rates,
+            currency_2 not in (list(usd_rates.keys()) + ["USD"]),
         ]
     ):
         raise UserInputError
@@ -83,9 +64,9 @@ def main():
     price_1: Price = Price(int(operand_1), currency_1)
     price_2: Price = Price(int(operand_2), currency_2)
 
-    #  Main calculation process
-    CalculationProcessor.exchange(price_1, price_2)
-    result_price: Price = CalculationProcessor.get_result(price_1, sign, price_2)
+    #  Main calculation process(don't use "elif sign == '-'" because of previous sign check (it can be just "+" or "-"))
+    Price.exchange(price_1, price_2)
+    result_price = price_1 + price_2 if sign == "+" else price_1 - price_2
     print(f"{result_price.amount} {result_price.currency}")
 
 
