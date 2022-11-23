@@ -8,12 +8,6 @@ class Price:
     amount: int
     currency: str
 
-    def __add__(self, other: "Price") -> "Price":
-        return Price(round(self.amount + other.amount, 2), self.currency)
-
-    def __sub__(self, other: "Price") -> "Price":
-        return Price(round(self.amount - other.amount, 2), self.currency)
-
     def exchange(self, other: "Price") -> None:
         """Exchanging currencies if needed"""
         if self.currency == other.currency:
@@ -25,3 +19,11 @@ class Price:
         else:
             other.amount /= usd_rates[other.currency]
             other.amount *= usd_rates[self.currency]
+
+    def __add__(self, other: "Price") -> "Price":
+        Price.exchange(self, other)
+        return Price(round(self.amount + other.amount, 2), self.currency)
+
+    def __sub__(self, other: "Price") -> "Price":
+        Price.exchange(self, other)
+        return Price(round(self.amount - other.amount, 2), self.currency)
