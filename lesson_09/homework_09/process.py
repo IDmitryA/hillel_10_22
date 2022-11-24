@@ -65,7 +65,6 @@ def main():
     price_2: Price = Price(int(operand_2), currency_2)
 
     #  Main calculation process(don't use "elif sign == '-'" because of previous sign check (it can be just "+" or "-"))
-    Price.exchange(price_1, price_2)
     result_price = price_1 + price_2 if sign == "+" else price_1 - price_2
     print(f"{result_price.amount} {result_price.currency}")
 
